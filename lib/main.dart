@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_2/screens/menu_screen.dart';
+import 'package:flutter_application_2/models.dart';
 
-void main() => runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await loadData();
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);

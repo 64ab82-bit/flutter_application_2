@@ -19,7 +19,7 @@ class _MasterMaintenanceScreenState extends State<MasterMaintenanceScreen> {
         actions: [
           TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('キャンセル')),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               final name = c.text.trim();
               if (name.isEmpty) return;
               setState(() {
@@ -47,12 +47,11 @@ class _MasterMaintenanceScreenState extends State<MasterMaintenanceScreen> {
         actions: [
           TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('キャンセル')),
           ElevatedButton(
-            onPressed: () {
+            onPressed: () async {
               setState(() {
                 masterItems.removeWhere((e) => e.id == item.id);
                 // 在庫データに影響が出るが、ここではそのまま残す（要件通り起動中保持）
-              });
-              Navigator.of(context).pop();
+              });              Navigator.of(context).pop();
             },
             child: const Text('削除'),
           ),

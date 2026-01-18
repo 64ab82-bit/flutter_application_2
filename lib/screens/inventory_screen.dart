@@ -29,7 +29,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
     if (d != null) setState(() => _selectedDate = DateTime(d.year, d.month, d.day, 0, 0));
   }
 
-  void _saveEntry() {
+  void _saveEntry() async {
     if (_selectedItemId == null) {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('アイテムを選択してください')));
       return;
@@ -41,13 +41,14 @@ class _InventoryScreenState extends State<InventoryScreen> {
     }
     final now = DateTime.now();
     final entryDate = DateTime(_selectedDate.year, _selectedDate.month, _selectedDate.day, now.hour, now.minute, now.second);
-    inventoryEntries.add(InventoryEntry(date: entryDate, itemId: _selectedItemId!, quantity: q));
+    final itemName = masterItems.firstWhere((e) => e.id == _selectedItemId).name;
+    inventoryEntries.add(InventoryEntry(date: entryDate, itemId: _selectedItemId!, itemName: itemName, quantity: q));
     _qtyController.clear();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('在庫を登録しました')));
     setState(() {});
   }
 
-  String _findItemName(int id) => masterItems.firstWhere((e) => e.id == id, orElse: () => Item(id: id, name: '不明')).name;
+  String _findItemName(InventoryEntry entry) => entry.itemName;
 
   @override
   Widget build(BuildContext context) {
@@ -95,7 +96,7 @@ class _InventoryScreenState extends State<InventoryScreen> {
                       itemCount: entries.length,
                       itemBuilder: (context, index) {
                         final e = entries[index];
-                        final name = _findItemName(e.itemId);
+                        final name = _findItemName(e);
                         return Card(
                           margin: const EdgeInsets.symmetric(vertical: 6),
                           child: ListTile(
