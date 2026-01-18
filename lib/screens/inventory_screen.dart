@@ -57,9 +57,10 @@ class _InventoryScreenState extends State<InventoryScreen> {
     final itemName = masterItems.firstWhere((e) => e.id == _selectedItemId).name;
     inventoryEntries.add(InventoryEntry(date: entryDate, itemId: _selectedItemId!, itemName: itemName, quantity: q));
     await saveData();
+    // 保存後、GitHub から最新データを再取得
+    await _loadLatestData();
     _qtyController.clear();
     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('在庫を登録しました')));
-    setState(() {});
   }
 
   String _findItemName(InventoryEntry entry) => entry.itemName;

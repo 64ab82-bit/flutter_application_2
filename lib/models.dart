@@ -70,6 +70,18 @@ Future<void> initializeGitHubConfig() async {
 
 bool isGitHubConfigured() => _githubToken != null && _githubUser != null && _githubRepo != null;
 
+// GitHub ユーザーのリポジトリ一覧を取得
+Future<List<String>> fetchUserRepositories(String token, String username) async {
+  try {
+    final client = github.GitHub(auth: github.Authentication.withToken(token));
+    final repos = await client.repositories.listUserRepositories(username).toList();
+    return repos.map((r) => r.name).toList();
+  } catch (e) {
+    print('Error fetching repositories: $e');
+    return [];
+  }
+}
+
 int getNextItemId() => _nextItemId++;
 
 // GitHub読み込みエラーメッセージ

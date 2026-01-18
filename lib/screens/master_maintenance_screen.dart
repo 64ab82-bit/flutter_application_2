@@ -35,15 +35,39 @@ class _MasterMaintenanceScreenState extends State<MasterMaintenanceScreen> {
             onPressed: () async {
               final name = c.text.trim();
               if (name.isEmpty) return;
-              setState(() {
-                if (item == null) {
-                  masterItems.add(Item(id: getNextItemId(), name: name));
-                } else {
-                  item.name = name;
+              
+              // 編集時に排他チェック
+              if (item != null) {
+                // GitHub から最新データを取得
+                await loadData();
+                
+                // 編集しようとしているアイテムがまだ存在するか確認
+                final stillExists = masterItems.any((e) => e.id == item.id);
+                if (!stillExists) {
+                  if (mounted) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('⚠️ このアイテムは別の PC で削除されました')),
+                    );
+                    Navigator.of(context).pop();
+                    await _loadLatestData();
+                  }
+                  return;
                 }
-              });
+                
+                // 存在する場合は更新
+                final existingItem = masterItems.firstWhere((e) => e.id == item.id);
+                existingItem.name = name;
+              } else {
+                // 新規作成
+                masterItems.add(Item(id: getNextItemId(), name: name));
+              }
+              
               await saveData();
-              Navigator.of(context).pop();
+              // 保存後、GitHub から最新データを再取得
+              await _loadLatestData();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: const Text('保存'),
           ),
@@ -62,10 +86,13 @@ class _MasterMaintenanceScreenState extends State<MasterMaintenanceScreen> {
           TextButton(onPressed: () => Navigator.of(context).pop(), child: const Text('キャンセル')),
           ElevatedButton(
             onPressed: () async {
-              setState(() {
-                masterItems.removeWhere((e) => e.id == item.id);
-                // 在庫データに影響が出るが、ここではそのまま残す（要件通り起動中保持）
-              });              await saveData();              Navigator.of(context).pop();
+              masterItems.removeWhere((e) => e.id == item.id);
+              await saveData();
+              // 保存後、GitHub から最新データを再取得
+              await _loadLatestData();
+              if (mounted) {
+                Navigator.of(context).pop();
+              }
             },
             child: const Text('削除'),
           ),
