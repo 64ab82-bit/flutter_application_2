@@ -34,12 +34,18 @@ class _AggregateScreenState extends State<AggregateScreen> {
 
   void _pickStart() async {
     final d = await showDatePicker(context: context, initialDate: _start, firstDate: DateTime(2000), lastDate: DateTime(2100));
-    if (d != null) setState(() => _start = d);
+    if (d != null) {
+      setState(() => _start = d);
+      _compute();
+    }
   }
 
   void _pickEnd() async {
     final d = await showDatePicker(context: context, initialDate: _end, firstDate: DateTime(2000), lastDate: DateTime(2100));
-    if (d != null) setState(() => _end = d);
+    if (d != null) {
+      setState(() => _end = d);
+      _compute();
+    }
   }
 
   void _compute() {
@@ -135,7 +141,14 @@ class _AggregateScreenState extends State<AggregateScreen> {
                               child: ListTile(
                                 leading: CircleAvatar(child: Text(name.isNotEmpty ? name[0] : '?')),
                                 title: Text(name),
-                                subtitle: Text(e.date.toLocal().toString().split(' ')[0]),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(e.date.toLocal().toString().split(' ')[0]),
+                                    if (e.remarks != null && e.remarks!.isNotEmpty)
+                                      Text('備考: ${e.remarks}', style: TextStyle(fontSize: 12, color: Colors.grey[600])),
+                                  ],
+                                ),
                                 trailing: Chip(label: Text('${e.quantity}')),
                               ),
                             );
