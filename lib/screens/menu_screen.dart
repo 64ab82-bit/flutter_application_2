@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_application_2/screens/inventory_screen.dart';
-import 'package:flutter_application_2/screens/master_maintenance_screen.dart';
-import 'package:flutter_application_2/screens/aggregate_screen.dart';
-import 'package:flutter_application_2/models.dart';
+import 'package:inventory_manager/screens/inventory_screen.dart';
+import 'package:inventory_manager/screens/master_maintenance_screen.dart';
+import 'package:inventory_manager/screens/aggregate_screen.dart';
+import 'package:inventory_manager/models.dart';
 
 class MenuScreen extends StatefulWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _MenuScreenState extends State<MenuScreen> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text('GitHub設定がまだです。メニューから設定してください。'),
+            content: Text('GitHubの接続先設定が未完了です。'),
             duration: Duration(seconds: 3),
           ),
         );
@@ -82,7 +82,7 @@ class _MenuScreenState extends State<MenuScreen> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: const Text('GitHub設定'),
+          title: const Text('データ取得設定'),
           content: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,

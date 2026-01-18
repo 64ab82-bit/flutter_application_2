@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/screens/menu_screen.dart';
-import 'package:flutter_application_2/models.dart';
+import 'package:inventory_manager/screens/menu_screen.dart';
+import 'package:inventory_manager/models.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: '在庫サンプルアプリ',
+      title: '在庫管理システム',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: const MenuScreen(),
     );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_2/models.dart';
-import 'package:flutter_application_2/screens/report_screen.dart';
+import 'package:inventory_manager/models.dart';
+import 'package:inventory_manager/screens/report_screen.dart';
 
 class AggregateScreen extends StatefulWidget {
   final DateTime? initialStart;
