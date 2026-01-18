@@ -230,11 +230,9 @@ class _InventoryScreenState extends State<InventoryScreen> {
             ElevatedButton(onPressed: _saveEntry, child: const Text('登録')),
 
             const Divider(height: 24),
-            Text(
-              _selectedItemId == null 
-                ? '← アイテムを選択すると履歴が表示されます'
-                : '入力履歴：',
-              style: const TextStyle(fontWeight: FontWeight.bold),
+            const Text(
+              '入力履歴：',
+              style: TextStyle(fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 8),
             Expanded(
