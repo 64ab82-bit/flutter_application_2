@@ -243,9 +243,9 @@ class _MenuScreenState extends State<MenuScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('在庫管理サンプル', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
+            Text('在庫管理システム', style: Theme.of(context).textTheme.headlineSmall?.copyWith(fontWeight: FontWeight.bold)),
             const SizedBox(height: 6),
-            const Text('サンプルデータで機能を試せます', style: TextStyle(color: Colors.grey)),
+            //const Text('サンプルデータで機能を試せます', style: TextStyle(color: Colors.grey)),
             const SizedBox(height: 16),
             Expanded(
               child: LayoutBuilder(
